@@ -62,3 +62,38 @@ describe('Test signup endpoints', () => {
     res.body.error.should.have.eql('"address" is not allowed to be empty');
   });
 });
+describe('Test signin endpoints', () => {
+  it('Should signin a user', async () => {
+    const res = await request
+      .post('/api/v1/auth/signin/')
+      .send(userInfo.user);
+    res.status.should.be.equal(200);
+    res.body.should.be.a('object');
+    res.body.data.should.have.property('token');
+  });
+  it('should fail if email is ommited', async () => {
+    const res = await request
+      .post('/api/v1/auth/signin/')
+      .send(userInfo.pass);
+    res.should.have.status(400);
+  });
+  it('should fail if password is ommited', async () => {
+    const res = await request
+      .post('/api/v1/auth/signin/')
+      .send(userInfo.email);
+    res.should.have.status(400);
+  });
+  it('should fail if Email is invalid', async () => {
+    const res = await request
+      .post('/api/v1/auth/signin/')
+      .send(userInfo.invalidUser);
+    res.should.have.status(400);
+  });
+  it('should fail if Password is invalid', async () => {
+    const res = await request
+      .post('/api/v1/auth/signin/')
+      .send(userInfo.invalidpassword);
+    res.should.have.status(400);
+    res.body.should.be.a('object');
+  });
+});
