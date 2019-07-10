@@ -1,0 +1,22 @@
+sudo: false
+language: node_js
+node_js:
+ - "12.0.0"
+services:
+  - postgresql
+env:
+  global:
+    - CC_TEST_REPORTER_ID=d486b60606f3818b45656050fa4bfdb12444f84cb3b385c3eef237328dcc9951
+before_script:
+  - yarn global add nyc
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  - npm run refresh
+script:
+ - npm run coveralls
+ - npm run coverage
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+notifications:
+  email: false
