@@ -1,28 +1,31 @@
 import dotenv from 'dotenv';
+import dataObjects from '../helpers/dataObjects';
 import userObjects from '../helpers/userObjects';
+import userModel from '../models/userModel';
+import authtok from '../helpers/authok';
 
-const { newUser, generateUserToken, userByEmail } = userObjects;
+const { generateUserToken, getCurrentUser } = userObjects;
+const { newData } = dataObjects;
+const { hashPassword } = authtok;
+const { createUser } = userModel;
 dotenv.config();
 
 class authController {
   static async userSignup(req, res) {
     try {
-      const user = await newUser(req);
+      req.body.password = hashPassword(req);
+      const user = await newData(req, createUser);
       const data = generateUserToken(user);
       res.status(201).json({ status: 'success', data });
-    } catch (error) {
-      res.status(500).json(error);
-    }
+    } catch (error) { res.status(500).json(error); }
   }
 
   static async userSignin(req, res) {
     try {
-      const user = await userByEmail(req.body.email);
+      const user = await getCurrentUser('email', req.body.email);
       const data = generateUserToken(user);
       return res.status(200).json({ status: 'success', data });
-    } catch (error) {
-      return res.status(500).json(error);
-    }
+    } catch (error) { return res.status(500).json(error); }
   }
 }
 

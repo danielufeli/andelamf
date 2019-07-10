@@ -38,14 +38,14 @@ describe('Test signup endpoints', () => {
       .post('/api/v1/auth/signup/')
       .send(userInfo.ommitedFirstname);
     res.status.should.be.equal(400);
-    res.body.error.should.have.eql('"firstname" is not allowed to be empty');
+    res.body.error.should.have.eql('"first_name" is not allowed to be empty');
   });
   it('Should fail if lastName is ommited', async () => {
     const res = await request
       .post('/api/v1/auth/signup/')
       .send(userInfo.ommitedLastname);
     res.status.should.be.equal(400);
-    res.body.error.should.have.eql('"lastname" is not allowed to be empty');
+    res.body.error.should.have.eql('"last_name" is not allowed to be empty');
   });
   it('Should fail if password is ommited', async () => {
     const res = await request

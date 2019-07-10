@@ -6,7 +6,7 @@ const validateSignin = {
     .error(() => ({ message: 'Enter a valid email to signin' })),
   password: Joi.string().min(6).max(255).required()
     .error(() => ({ message: 'Enter a valid password to signin' })),
-  isAdmin: Joi.boolean(),
+  is_admin: Joi.boolean(),
 };
 
 export default validateSignin;
