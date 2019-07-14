@@ -114,4 +114,35 @@ describe('Test trip endpoints User', () => {
       .send();
     res.status.should.be.equal(200);
   });
+  it('should allow user to create booking', async () => {
+    const res = await chai.request(server)
+      .post('/api/v1/bookings')
+      .set('x-auth-token', userToken)
+      .send(tripInfo.newBooking);
+    res.status.should.be.equal(201);
+  });
+  it('Should fail if trip_id is ommited', async () => {
+    const res = await chai.request(server)
+      .post('/api/v1/bookings/')
+      .set('x-auth-token', userToken)
+      .send();
+    res.status.should.be.equal(400);
+    res.body.error.should.have.eql('"trip_id" is required');
+  });
+  it('Should fail if user_id is ommited', async () => {
+    const res = await chai.request(server)
+      .post('/api/v1/bookings/')
+      .set('x-auth-token', userToken)
+      .send(tripInfo.ommitBookingUser);
+    res.status.should.be.equal(400);
+    res.body.error.should.have.eql('"user_id" is required');
+  });
+  it('Should fail if seat_number is ommited', async () => {
+    const res = await chai.request(server)
+      .post('/api/v1/bookings/')
+      .set('x-auth-token', userToken)
+      .send(tripInfo.ommitBookingSeat);
+    res.status.should.be.equal(400);
+    res.body.error.should.have.eql('"seat_number" is required');
+  });
 });
