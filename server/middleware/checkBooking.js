@@ -8,7 +8,7 @@ export default class checkUserEmail {
     try {
       const user = await getCurrentUser('email', req.body.email);
       if (!user) { return res.status(401).json({ status: 'error', message: 'Your email is incorrect' }); }
-      if (!authtok.comparePassword(user.password, req.body.password)) { return res.status(401).json({ status: 'error', message: 'Your password is incorrect' }); }
+      if (!authtok.comparePassword(user.password, req.body.password)) { return res.status(401).json({ status: 'error', error: 'Your password is incorrect' }); }
       return next();
     } catch (error) { return next(error); }
   }
