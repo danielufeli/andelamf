@@ -6,7 +6,8 @@ const { getCurrentUser } = userObjects;
 export default class auth {
   static async verifyToken(req, res, next) {
     try {
-      const token = req.headers['x-auth-token'];
+      // eslint-disable-next-line prefer-destructuring
+      const token = req.headers.token;
       if (!token) { res.status(401).json({ status: 'error', error: 'Your token is missing' }); }
       const decoded = await jwt.verify(token, process.env.jwtPrivateKey);
       const {
