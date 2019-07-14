@@ -8,7 +8,6 @@ const validateUser = {
     .email(),
   address: Joi.string().min(6).required(),
   status: Joi.string().min(6),
-  mobileno: Joi.number().min(10).required(),
   is_admin: Joi.boolean(),
 };
 
