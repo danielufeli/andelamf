@@ -14,11 +14,9 @@ export default class userObjects {
   }
 
   static generateUserToken(user) {
-    const {
-      // eslint-disable-next-line camelcase
-      user_id, first_name, last_name, email, is_admin,
-    } = user;
-    const userToken = generateToken(user_id, is_admin, email, first_name, last_name);
+    // eslint-disable-next-line camelcase
+    const { user_id, is_admin } = user;
+    const userToken = generateToken(user);
     const data = { user_id, is_admin, token: userToken };
     return data;
   }

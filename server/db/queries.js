@@ -29,10 +29,12 @@ const createQueries = {
     capacity VARCHAR(100) NOT NULL
   )`,
   bookingTable: `CREATE TABLE bookings (
-    booking_id SERIAL PRIMARY KEY,
-    trip_id VARCHAR(100) NOT NULL,
-    user_id VARCHAR(100) NOT NULL,
-    createdon TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    booking_id SERIAL NOT NULL,
+    trip_id SERIAL NOT NULL,
+    user_id SERIAL NOT NULL,
+    seat_number VARCHAR(100) NOT NULL,
+    createdon TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(booking_id, trip_id, user_id)
   )`,
 };
 

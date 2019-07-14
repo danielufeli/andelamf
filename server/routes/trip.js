@@ -6,13 +6,16 @@ import auth from '../middleware/auth';
 import isAdmin from '../middleware/isAdmin';
 import checkTrip from '../middleware/checkTrip';
 import validateTrip from '../helpers/validateTrip';
+import checkValue from '../middleware/checkValue';
 
 const router = express.Router();
-const { createTrip, getAllTrips } = tripController;
+const { createBus, createTrip, getAllTrips } = tripController;
 const { verifyToken } = auth;
 const { checkAllTrips } = checkTrip;
 
-router.post('/', verifyToken, isAdmin, allValidator(validateTrip), createTrip);
+router.post('/', checkValue(5), verifyToken, isAdmin, allValidator(validateTrip), createTrip);
+
+router.post('/', checkValue(5), verifyToken, isAdmin, createBus);
 
 router.get('/', verifyToken, checkAllTrips, getAllTrips);
 
