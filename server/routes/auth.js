@@ -13,7 +13,7 @@ const router = express.Router();
 const { userSignup, userSignin } = authController;
 const { checkEmailSignin } = checkUserEmail;
 
-router.post('/signup', checkValue(6), allValidator(validateUser), checkUserReg('email'), checkUserReg('mobileno'), userSignup);
+router.post('/signup', checkValue(6), allValidator(validateUser), checkUserReg('email'), userSignup);
 
 router.post('/signin', allValidator(validateSignin), checkEmailSignin, userSignin);
 
