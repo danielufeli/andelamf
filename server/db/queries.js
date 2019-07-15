@@ -32,7 +32,7 @@ const createQueries = {
     booking_id SERIAL NOT NULL,
     trip_id SERIAL NOT NULL,
     user_id SERIAL NOT NULL,
-    seat_number VARCHAR(100) NOT NULL,
+    seat_number VARCHAR(100),
     createdon TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(booking_id, trip_id, user_id)
   )`,
