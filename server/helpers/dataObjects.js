@@ -32,7 +32,6 @@ export default class dataObjects {
 
   static async newBooking(req, queries) {
     // eslint-disable-next-line camelcase
-    // const { user_id } = dataObjects.userData(req);
     const { trip_id } = req.body;
     const { user_id } = req.user;
     const values = [trip_id, user_id];

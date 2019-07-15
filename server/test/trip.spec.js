@@ -21,7 +21,7 @@ describe('Test trip endpoints Admin', () => {
   it('Should fail if missing token', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips')
-      .set('x-auth-token', '')
+      .set('token', '')
       .send(tripInfo.newTrip);
     res.status.should.be.equal(401);
     res.body.should.be.a('object');
@@ -29,21 +29,21 @@ describe('Test trip endpoints Admin', () => {
   it('should fail if no trip is available', async () => {
     const res = await chai.request(server)
       .get('/api/v1/trips')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send();
     res.status.should.be.equal(404);
   });
   it('should create a trip', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send(tripInfo.newTrip);
     res.status.should.be.equal(201);
   });
   it('Should fail if bus_id is ommited', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips/')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send(tripInfo.ommitBusid);
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"bus_id" is required');
@@ -51,7 +51,7 @@ describe('Test trip endpoints Admin', () => {
   it('Should fail if origin is ommited', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips/')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send(tripInfo.ommitOrigin);
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"origin" is required');
@@ -59,7 +59,7 @@ describe('Test trip endpoints Admin', () => {
   it('Should fail if Destination is ommited', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips/')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send(tripInfo.ommitDestination);
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"destination" is required');
@@ -67,26 +67,26 @@ describe('Test trip endpoints Admin', () => {
   it('Should fail if trip_date is ommited', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips/')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send(tripInfo.ommitTripDate);
     res.status.should.be.equal(400);
-    res.body.error.should.have.eql('Trip date is invalid, enter date in this formt(YYYY-MM-DD)');
+    res.body.error.should.have.eql('"trip_date" is required');
   });
   it('Should fail if fare is ommited', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips/')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send(tripInfo.ommitFare);
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"fare" is required');
   });
-  it('Should fail if trip_date is invalid', async () => {
+  it('Should fail if trip_date is omitted', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips/')
-      .set('x-auth-token', adminToken)
+      .set('token', adminToken)
       .send(tripInfo.invalidTripDate);
     res.status.should.be.equal(400);
-    res.body.error.should.have.eql('Trip date is invalid, enter date in this formt(YYYY-MM-DD)');
+    res.body.error.should.have.eql('"trip_date" must be a number of milliseconds or valid date string');
   });
 });
 describe('Test trip endpoints User', () => {
@@ -103,46 +103,30 @@ describe('Test trip endpoints User', () => {
   it('should not allow user to create trip', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips')
-      .set('x-auth-token', userToken)
+      .set('token', userToken)
       .send(tripInfo.newTrip);
     res.status.should.be.equal(403);
   });
   it('should get all trips', async () => {
     const res = await chai.request(server)
       .get('/api/v1/trips')
-      .set('x-auth-token', userToken)
+      .set('token', userToken)
       .send();
     res.status.should.be.equal(200);
   });
   it('should allow user to create booking', async () => {
     const res = await chai.request(server)
       .post('/api/v1/bookings')
-      .set('x-auth-token', userToken)
+      .set('token', userToken)
       .send(tripInfo.newBooking);
     res.status.should.be.equal(201);
   });
   it('Should fail if trip_id is ommited', async () => {
     const res = await chai.request(server)
       .post('/api/v1/bookings/')
-      .set('x-auth-token', userToken)
+      .set('token', userToken)
       .send();
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"trip_id" is required');
-  });
-  it('Should fail if user_id is ommited', async () => {
-    const res = await chai.request(server)
-      .post('/api/v1/bookings/')
-      .set('x-auth-token', userToken)
-      .send(tripInfo.ommitBookingUser);
-    res.status.should.be.equal(400);
-    res.body.error.should.have.eql('"user_id" is required');
-  });
-  it('Should fail if seat_number is ommited', async () => {
-    const res = await chai.request(server)
-      .post('/api/v1/bookings/')
-      .set('x-auth-token', userToken)
-      .send(tripInfo.ommitBookingSeat);
-    res.status.should.be.equal(400);
-    res.body.error.should.have.eql('"seat_number" is required');
   });
 });
