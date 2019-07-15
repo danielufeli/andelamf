@@ -54,13 +54,6 @@ describe('Test signup endpoints', () => {
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"password" is not allowed to be empty');
   });
-  it('Should fail if address is ommited', async () => {
-    const res = await request
-      .post('/api/v1/auth/signup/')
-      .send(userInfo.ommitedAddress);
-    res.status.should.be.equal(400);
-    res.body.error.should.have.eql('"address" is not allowed to be empty');
-  });
 });
 describe('Test signin endpoints', () => {
   it('Should signin a user', async () => {

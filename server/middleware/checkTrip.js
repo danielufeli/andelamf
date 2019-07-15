@@ -8,7 +8,7 @@ export default class checkTrips {
   static async checkAllTrips(req, res, next) {
     try {
       const trips = await getAllData(allTrips);
-      if (trips.length < 1) { return res.status(404).json({ status: 404, message: 'No Trips Available' }); }
+      if (trips.length < 1) { return res.status(404).json({ status: 'error', error: 'No Trips Available' }); }
       return next();
     } catch (error) { return next(error); }
   }

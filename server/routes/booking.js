@@ -11,6 +11,6 @@ const router = express.Router();
 const { seatBooking } = bookingController;
 const { verifyToken } = auth;
 
-router.post('/', checkValue(3), allValidator(validateBooking), verifyToken, seatBooking);
+router.post('/', allValidator(validateBooking), verifyToken, seatBooking);
 
 export default router;

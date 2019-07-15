@@ -1,7 +1,7 @@
 const bookingModel = {
   createBooking: `WITH inserted AS (INSERT INTO
-  bookings(trip_id, user_id, seat_number)
-  values($1, $2, $3)
+  bookings(trip_id, user_id)
+  values($1, $2)
   returning *)
   SELECT inserted.*, trips.bus_id, trips.trip_date, users.first_name, users.last_name, users.email, users.mobileno
   FROM inserted

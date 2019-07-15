@@ -5,7 +5,7 @@ import userModel from '../models/userModel';
 import authtok from '../helpers/authok';
 
 const { generateUserToken, getCurrentUser } = userObjects;
-const { newData } = dataObjects;
+const { newUser } = dataObjects;
 const { hashPassword } = authtok;
 const { createUser } = userModel;
 dotenv.config();
@@ -14,7 +14,7 @@ class authController {
   static async userSignup(req, res) {
     try {
       req.body.password = hashPassword(req);
-      const user = await newData(req, createUser);
+      const user = await newUser(req, createUser);
       const data = generateUserToken(user);
       res.status(201).json({ status: 'success', data });
     } catch (error) { res.status(500).json(error); }
