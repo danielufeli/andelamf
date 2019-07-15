@@ -6,7 +6,6 @@ import auth from '../middleware/auth';
 import isAdmin from '../middleware/isAdmin';
 import checkTrip from '../middleware/checkTrip';
 import validateTrip from '../helpers/validateTrip';
-import checkValue from '../middleware/checkValue';
 
 const router = express.Router();
 const { createBus, createTrip, getAllTrips } = tripController;

@@ -1,14 +1,19 @@
-import userObjects from '../helpers/userObjects';
-import authtok from '../helpers/authok';
+import bookingModel from '../models/bookingModel';
+import dbObjects from '../helpers/dbObjects';
 
-const { getCurrentUser } = userObjects;
+const { selectQuery } = dbObjects;
+const { allBookings } = bookingModel;
 
-export default class checkUserEmail {
-  static async checkEmailSignin(req, res, next) {
+export default class checkBooking {
+  static async getUserBookings(req, res, next) {
     try {
-      const user = await getCurrentUser('email', req.body.email);
-      if (!user) { return res.status(401).json({ status: 'error', message: 'Your email is incorrect' }); }
-      if (!authtok.comparePassword(user.password, req.body.password)) { return res.status(401).json({ status: 'error', error: 'Your password is incorrect' }); }
+      const { is_admin, user_id } = req.user;
+      const bookings = await selectQuery(allBookings);
+      if (is_admin === false) {
+        const data = bookings.filter(booking => booking.user_id === user_id);
+        if (data.length < 1) { return res.status(404).json({ status: 'error', error: 'No Bookings Available' }); }
+        return res.status(200).json({ status: 'success', data });
+      }
       return next();
     } catch (error) { return next(error); }
   }

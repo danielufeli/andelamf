@@ -88,6 +88,13 @@ describe('Test trip endpoints Admin', () => {
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"trip_date" must be a number of milliseconds or valid date string');
   });
+  it('Should get all bookings', async () => {
+    const res = await chai.request(server)
+      .get('/api/v1/bookings/')
+      .set('token', adminToken)
+      .send();
+    res.status.should.be.equal(200);
+  });
 });
 describe('Test trip endpoints User', () => {
   let userToken;
@@ -128,5 +135,12 @@ describe('Test trip endpoints User', () => {
       .send();
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"trip_id" is required');
+  });
+  it('Should get all users bookings', async () => {
+    const res = await chai.request(server)
+      .get('/api/v1/bookings/')
+      .set('token', userToken)
+      .send();
+    res.status.should.be.equal(200);
   });
 });

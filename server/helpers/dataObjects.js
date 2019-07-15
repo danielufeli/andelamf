@@ -40,7 +40,6 @@ export default class dataObjects {
     return data;
   }
 
-
   static async getAllData(queries) {
     const data = await selectQuery(queries);
     return data;

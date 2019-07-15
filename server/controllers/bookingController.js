@@ -1,15 +1,21 @@
 import dataObjects from '../helpers/dataObjects';
 import bookingModel from '../models/bookingModel';
 
-const { userData, newBooking } = dataObjects;
-const { createBooking } = bookingModel;
+const { getAllData, newBooking } = dataObjects;
+const { allBookings, createBooking } = bookingModel;
 
 class bookingController {
   static async seatBooking(req, res) {
     try {
       const data = await newBooking(req, createBooking);
-      userData(req);
       res.status(201).json({ status: 'success', data });
+    } catch (error) { res.status(500).json(error); }
+  }
+
+  static async getAllBookings(req, res) {
+    try {
+      const data = await getAllData(allBookings);
+      res.status(200).json({ status: 'success', data });
     } catch (error) { res.status(500).json(error); }
   }
 }
