@@ -2,14 +2,14 @@ import dataObjects from '../helpers/dataObjects';
 import tripModel from '../models/tripModel';
 import busModel from '../models/busModel';
 
-const { userData, getAllData, newData } = dataObjects;
+const { userData, getAllData, newData, newTrip } = dataObjects;
 const { allTrips, createTrip } = tripModel;
 const { createBus } = busModel;
 
 class tripController {
   static async createTrip(req, res) {
     try {
-      const data = await newData(req, createTrip);
+      const data = await newTrip(req, createTrip);
       userData(req);
       res.status(201).json({ status: 'success', data });
     } catch (error) { res.status(500).json(error); }
