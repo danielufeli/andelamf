@@ -39,8 +39,7 @@ export default class dataObjects {
     data.id = data.booking_id;
     return data;
   }
-
-
+  
   static async getAllData(queries) {
     const data = await selectQuery(queries);
     return data;
