@@ -29,6 +29,16 @@ export default class dataObjects {
     return data;
   }
 
+  static async newBooking(req, queries) {
+    // eslint-disable-next-line camelcase
+    const {
+      trip_id, user_id, seat_number,
+    } = req.body;
+    const values = [trip_id, user_id, seat_number];
+    const data = await insertQuery(values, queries);
+    return data;
+  }
+
 
   static async getAllData(queries) {
     const data = await selectQuery(queries);

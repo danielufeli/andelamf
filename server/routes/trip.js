@@ -13,7 +13,7 @@ const { createBus, createTrip, getAllTrips } = tripController;
 const { verifyToken } = auth;
 const { checkAllTrips } = checkTrip;
 
-router.post('/', verifyToken, isAdmin, createTrip);
+router.post('/', verifyToken, isAdmin, allValidator(validateTrip), createTrip);
 
 router.post('/', verifyToken, isAdmin, createBus);
 
