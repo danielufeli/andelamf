@@ -9,6 +9,17 @@ export default class dataObjects {
     return data;
   }
 
+  static async newUser(req, queries) {
+    // eslint-disable-next-line camelcase
+    const {
+      email, first_name, last_name, password,
+    } = req.body;
+    const values = [email, first_name, last_name, password];
+    const data = await insertQuery(values, queries);
+    return data;
+  }
+
+
   static async getAllData(queries) {
     const data = await selectQuery(queries);
     return data;

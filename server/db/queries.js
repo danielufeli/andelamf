@@ -2,9 +2,9 @@ const createQueries = {
   userTable: `CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
     first_name VARCHAR(100),
     last_name VARCHAR(100),
+    password VARCHAR(255) NOT NULL,
     mobileno VARCHAR(100),
     address VARCHAR(100),
     is_admin BOOLEAN DEFAULT FALSE,
@@ -47,10 +47,10 @@ const dropQueries = {
 const hashPassword = '$2a$10$Pei8CV/I0Z3BMFVJuJClaePYmvc.tKnaGK3xFXKJoTTjul84exLfe';
 const seedQueries = {
   userTable: `INSERT INTO
-  users(email, password, first_name, last_name, mobileno, address, is_admin)
-  VALUES('admin@wayfarer.com', '${hashPassword}', 'Daniel', 'Ufeli', '08082205956', '26 fagbeyiro street alakuko', true),
-  ('user1@wayfarer.com', '${hashPassword}', 'James', 'Oniola', '08105334020', '26 fagbeyiro street alakuko', false),
-  ('user2@wayfarer.com', '${hashPassword}', 'Olanrewaju', 'Julius',  '08037265917', '26 fagbeyiro street alakuko', false)
+  users(email, first_name, last_name, password, mobileno, address, is_admin)
+  VALUES('admin@wayfarer.com', 'Daniel', 'Ufeli', '${hashPassword}', '08082205956', '26 fagbeyiro street alakuko', true),
+  ('user1@wayfarer.com', 'James', 'Oniola', '${hashPassword}', '08105334020', '26 fagbeyiro street alakuko', false),
+  ('user2@wayfarer.com', 'Olanrewaju', 'Julius', '${hashPassword}', '08037265917', '26 fagbeyiro street alakuko', false)
   `,
 };
 
