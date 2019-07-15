@@ -17,7 +17,7 @@ export default class checkTrips {
     try {
       const { tripId } = req.params;
       const trips = await getAllData(allTrips);
-      const trip = trips.find(u => u.trip_id === Number(tripId));
+      const trip = trips.find(userTrip => userTrip.trip_id === Number(tripId));
       if (!trip) return res.status(404).json({ status: 'error', error: 'No Trip Available' });
       return next();
     } catch (error) { return next(error); }

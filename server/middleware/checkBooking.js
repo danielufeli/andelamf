@@ -17,4 +17,14 @@ export default class checkBooking {
       return next();
     } catch (error) { return next(error); }
   }
+
+  static async getSingleUserBooking(req, res, next) {
+    try {
+      const { bookingId } = req.params;
+      const bookings = await selectQuery(allBookings);
+      const userBooking = bookings.find(ubooking => ubooking.booking_id === Number(bookingId));
+      if (!userBooking) { return res.status(404).json({ status: 'error', error: 'Booking Not Found' }); }
+      return next();
+    } catch (error) { return next(error); }
+  }
 }
