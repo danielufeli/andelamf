@@ -54,4 +54,12 @@ export default class dataObjects {
     data.message = 'Trip cancelled successfully';
     return data;
   }
+
+  static async deleteData(req, queries) {
+    const { bookingId } = req.params;
+    const values = [Number(bookingId)];
+    const data = await insertQuery(values, queries);
+    data.message = 'Booking deleted successfully';
+    return data;
+  }
 }

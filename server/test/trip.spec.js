@@ -150,4 +150,11 @@ describe('Test trip endpoints User', () => {
       .send();
     res.status.should.be.equal(200);
   });
+  it('Should Allow users to delete bookings', async () => {
+    const res = await chai.request(server)
+      .delete('/api/v1/bookings/1')
+      .set('token', userToken)
+      .send();
+    res.status.should.be.equal(200);
+  });
 });

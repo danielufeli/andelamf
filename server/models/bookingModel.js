@@ -14,6 +14,7 @@ const bookingModel = {
   INNER JOIN trips ON b.trip_id = trips.trip_id
   INNER JOIN users ON b.user_id = users.user_id
   `,
+  deleteBookingQuery: 'DELETE FROM bookings WHERE booking_id=$1 returning *',
 };
 
 export default bookingModel;
