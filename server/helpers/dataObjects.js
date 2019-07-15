@@ -1,6 +1,6 @@
 import dbObjects from './dbObjects';
 
-const { insertQuery, selectQuery } = dbObjects;
+const { insertQuery, selectQuery, updateQuery } = dbObjects;
 
 export default class dataObjects {
   static async newData(req, queries) {
@@ -39,11 +39,19 @@ export default class dataObjects {
     data.id = data.booking_id;
     return data;
   }
-  
+
   static async getAllData(queries) {
     const data = await selectQuery(queries);
     return data;
   }
 
-  static userData(req) { const { user } = req; req.body = user; }
+  static async updateData(req, queries, tripq) {
+    const { tripId } = req.params;
+    const trips = await selectQuery(tripq);
+    const trip = trips.find(userTrip => userTrip.trip_id === Number(tripId));
+    const values = [req.body.status || trip.status, tripId];
+    const data = await insertQuery(values, queries);
+    data.message = 'Trip cancelled successfully';
+    return data;
+  }
 }
