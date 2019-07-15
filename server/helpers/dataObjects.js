@@ -26,6 +26,7 @@ export default class dataObjects {
     } = req.body;
     const values = [bus_id, origin, destination, trip_date, fare];
     const data = await insertQuery(values, queries);
+    data.id = data.trip_id;
     return data;
   }
 
