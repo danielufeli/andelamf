@@ -1,16 +1,13 @@
 import dataObjects from '../helpers/dataObjects';
 import tripModel from '../models/tripModel';
-import busModel from '../models/busModel';
 
-const { userData, getAllData, newData, newTrip } = dataObjects;
-const { allTrips, createTrip } = tripModel;
-const { createBus } = busModel;
+const { updateData, getAllData, newTrip } = dataObjects;
+const { allTrips, createTrip, updateTrip } = tripModel;
 
 class tripController {
   static async createTrip(req, res) {
     try {
       const data = await newTrip(req, createTrip);
-      userData(req);
       res.status(201).json({ status: 'success', data });
     } catch (error) { res.status(500).json(error); }
   }
@@ -18,16 +15,14 @@ class tripController {
   static async getAllTrips(req, res) {
     try {
       const data = await getAllData(allTrips);
-      userData(req);
       res.status(200).json({ status: 'success', data });
     } catch (error) { res.status(500).json(error); }
   }
 
-  static async createBus(req, res) {
+  static async cancelTrip(req, res) {
     try {
-      const data = await newData(req, createBus);
-      userData(req);
-      res.status(201).json({ status: 'success', data });
+      const data = await updateData(req, updateTrip, allTrips);
+      res.status(200).json({ status: 'success', data });
     } catch (error) { res.status(500).json(error); }
   }
 }

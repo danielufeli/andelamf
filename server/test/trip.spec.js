@@ -95,6 +95,13 @@ describe('Test trip endpoints Admin', () => {
       .send();
     res.status.should.be.equal(200);
   });
+  it('Should cancel trip', async () => {
+    const res = await chai.request(server)
+      .patch('/api/v1/trips/1')
+      .set('token', adminToken)
+      .send('cancelled');
+    res.status.should.be.equal(200);
+  });
 });
 describe('Test trip endpoints User', () => {
   let userToken;

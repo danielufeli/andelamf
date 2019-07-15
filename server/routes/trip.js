@@ -8,14 +8,14 @@ import checkTrip from '../middleware/checkTrip';
 import validateTrip from '../helpers/validateTrip';
 
 const router = express.Router();
-const { createBus, createTrip, getAllTrips } = tripController;
+const { createTrip, getAllTrips, cancelTrip } = tripController;
 const { verifyToken } = auth;
-const { checkAllTrips } = checkTrip;
+const { checkAllTrips, checkTripUpdate } = checkTrip;
 
 router.post('/', verifyToken, isAdmin, allValidator(validateTrip), createTrip);
 
-router.post('/', verifyToken, isAdmin, createBus);
-
 router.get('/', verifyToken, checkAllTrips, getAllTrips);
+
+router.patch('/:tripId', verifyToken, isAdmin, checkTripUpdate, cancelTrip);
 
 export default router;
