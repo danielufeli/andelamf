@@ -28,9 +28,7 @@ API endpoints URL - https://wayfareran.herokuapp.com/
 |PATCH   |Admin can cancel a trip                 |api/v1/trips/:tripId                      |
 |GET     |Both Admin and Users can see all trips  |api/v1/bookings                           |
 |POST    |Users can book a seat on a trip         |api/v1/bookings                           |
-|GET     |View all bookings. An Admin can see all 
-          bookings, while user can see all of 
-          his/herbookings.                        |api/v1/bookings                           |
+|GET     |View all bookings.                      |api/v1/bookings                           |
 |DELETE  |Users can delete their booking          |api/v1/bookings/:bookingId                |
 
 ___
@@ -40,7 +38,7 @@ Username: admin@wayfarer.com<br/>
 Password: Domi@2019
 
 User-<br/>
-Username: user@wayfarer.com<br/>
+Username: user1@wayfarer.com<br/>
 Password: Domi@2019
 
 ___
