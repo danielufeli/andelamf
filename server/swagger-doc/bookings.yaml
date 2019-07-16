@@ -1,0 +1,76 @@
+path:
+  /api/v1/bookings:
+    post:
+      tags:
+        - bookings
+      summary: Book a seat on a trip
+      description: Allow user to Book a seat on a trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: booking
+          description: new booking to be created
+          schema:
+            $ref: "#/definitions/booking"
+      responses:
+        201:
+          description: Booking created successfully
+        400:
+          description: Bad request
+        403:
+          description: Denies access to the resource if its not the Admin
+        500:
+          description: Internal server error
+    get:
+      tags:
+        - bookings
+      summary: View all bookings
+      description: An Admin can see all bookings, while user can see all of his/her bookings
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully get all bookings
+        400:
+          description: Bad request
+        403:
+          description: Invalid token or missing token
+        500:
+          description: Internal server error
+  /api/v1/bookings/{bookingId}:
+    delete:
+      tags:
+        - bookings
+      summary: Delete a booking
+      description: User can Delete his/her booking
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bookingId
+          description: Booking ID
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Successfully get a specific Article
+        401:
+          description: Denies access to the resource if its not the Admin
+        500:
+          description: Internal server error
+definitions:
+  booking:
+    type: object
+    required:
+      - trip_id
+    properties:
+      trip_id:
+        type: integer
+        example: 1
