@@ -1,0 +1,105 @@
+path:
+  /api/v1/trips:
+    post:
+      tags:
+        - trips
+      summary: Admin can create a trip
+      description: Allow an Admin to create a trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: trip
+          description: new trip to be created
+          schema:
+            $ref: "#/definitions/trip"
+      responses:
+        201:
+          description: Trip created successfully
+        400:
+          description: Bad request
+        403:
+          description: Denies access to the resource if its not the Admin
+        500:
+          description: Internal server error
+    get:
+      tags:
+        - trips
+      summary: Get all trips
+      description: User and Admin can view all trips
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully get trips
+        400:
+          description: Bad request
+        403:
+          description: Invalid token or missing token
+        500:
+          description: Internal server error
+  /api/v1/trips/{tripId}:
+    patch:
+      tags:
+        - trips
+      summary: Cancel a trip
+      description: Admin can Cancel a trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: status
+          description: update trip status
+          schema:
+            $ref: "#/definitions/status"
+        - in: path
+          name: tripId
+          description: Trip ID
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Successfully get a specific Article
+        401:
+          description: Denies access to the resource if its not the Admin
+        500:
+          description: Internal server error
+definitions:
+  trip:
+    type: object
+    required:
+      - bus_id
+      - origin
+      - destination
+      - trip_date
+      - fare
+    properties:
+      bus_id:
+        type: integer
+        example: 1
+      origin:
+        type: string
+        example: "Lagos"
+      destination:
+        type: string
+        example: "Calabar"
+      trip_date:
+        type: string
+        example: "2019-07-20"
+      fare:
+        type: integer
+        example: 1000
+  status:
+    type: object
+    required:
+      - status
+    properties:
+      status:
+        type: string
+        example: "cancelled"
