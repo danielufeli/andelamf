@@ -1,7 +1,7 @@
 const bookingModel = {
   createBooking: `WITH inserted AS (INSERT INTO
-  bookings(trip_id, user_id)
-  values($1, $2)
+  bookings(trip_id, user_id, seat_number)
+  values($1, $2, $3)
   returning *)
   SELECT inserted.*, trips.bus_id, trips.trip_date, users.first_name, users.last_name, users.email, users.mobileno
   FROM inserted
@@ -15,6 +15,8 @@ const bookingModel = {
   INNER JOIN users ON b.user_id = users.user_id
   `,
   deleteBookingQuery: 'DELETE FROM bookings WHERE booking_id=$1 returning *',
+  getBookingById: 'SELECT * FROM bookings WHERE booking_id = $1',
+  getBookingByTrip: 'SELECT * FROM bookings WHERE trip_id = $1',
 };
 
 export default bookingModel;

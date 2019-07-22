@@ -6,10 +6,15 @@ const tripInfo = {
     trip_date: '2019-07-09',
     fare: 1000.00,
   },
+  newBus: {
+    number_plate: 'EKY430GI',
+    manufacturer: 'Toyota',
+    model: 'Haice',
+    year: '2005',
+    capacity: 14,
+  },
   newBooking: {
     trip_id: 1,
-    user_id: 2,
-    seat_number: 5,
   },
   ommitBookingUser: {
     trip_id: 1,

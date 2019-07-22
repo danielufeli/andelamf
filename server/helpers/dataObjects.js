@@ -1,20 +1,25 @@
 import dbObjects from './dbObjects';
+import busModel from '../models/busModel';
+import tripModel from '../models/tripModel';
+import bookingModel from '../models/bookingModel';
 
-const { insertQuery, selectQuery, updateQuery } = dbObjects;
+const { insertQuery, selectQuery } = dbObjects;
+const { allBookings } = bookingModel;
+const { getBusById } = busModel;
+const { getTripById } = tripModel;
 
 export default class dataObjects {
-  static async newData(req, queries) {
-    const values = Object.values(req.body);
-    const data = await insertQuery(values, queries);
-    return data;
-  }
-
   static async newUser(req, queries) {
     // eslint-disable-next-line camelcase
     const {
       email, first_name, last_name, password,
     } = req.body;
-    const values = [email, first_name, last_name, password];
+    const values = [
+      email.trim(),
+      first_name.trim(),
+      last_name.trim(),
+      password.trim(),
+    ];
     const data = await insertQuery(values, queries);
     return data;
   }
@@ -24,19 +29,58 @@ export default class dataObjects {
     const {
       bus_id, origin, destination, trip_date, fare,
     } = req.body;
-    const values = [bus_id, origin, destination, trip_date, fare];
+    const values = [
+      Number(bus_id),
+      origin.trim(),
+      destination.trim(),
+      trip_date.trim(),
+      Number(fare),
+    ];
     const data = await insertQuery(values, queries);
     data.id = data.trip_id;
     return data;
   }
 
-  static async newBooking(req, queries) {
+  static async getBusTrip(req) {
+    // eslint-disable-next-line camelcase
+    const { bus_id } = req.body;
+    const bus = await insertQuery([Number(bus_id)], getBusById);
+    return bus;
+  }
+
+  static async getBus(req) {
     // eslint-disable-next-line camelcase
     const { trip_id } = req.body;
+    const trip = await insertQuery([Number(trip_id)], getTripById);
+    const { bus_id } = trip;
+    const bus = await insertQuery([Number(bus_id)], getBusById);
+    return bus;
+  }
+
+  static async getTripBooking(req) {
+    // eslint-disable-next-line camelcase
+    const { trip_id } = req.body;
+    const trip = await insertQuery([Number(trip_id)], getTripById);
+    return trip;
+  }
+
+  static async newBooking(req, queries) {
+    // eslint-disable-next-line camelcase
+    const { trip_id, newseatno } = req.body;
     const { user_id } = req.user;
-    const values = [trip_id, user_id];
+    const values = [trip_id, user_id, Number(newseatno)];
     const data = await insertQuery(values, queries);
     data.id = data.booking_id;
+    return data;
+  }
+
+  static async newBus(req, queries) {
+    // eslint-disable-next-line camelcase
+    const {
+      number_plate, manufacturer, model, year, capacity,
+    } = req.body;
+    const values = [number_plate, manufacturer, model, year, Number(capacity)];
+    const data = await insertQuery(values, queries);
     return data;
   }
 
@@ -45,11 +89,9 @@ export default class dataObjects {
     return data;
   }
 
-  static async updateData(req, queries, tripq) {
+  static async updateData(req, queries) {
     const { tripId } = req.params;
-    const trips = await selectQuery(tripq);
-    const trip = trips.find(userTrip => userTrip.trip_id === Number(tripId));
-    const values = [req.body.status || trip.status, tripId];
+    const values = ['cancelled', tripId];
     const data = await insertQuery(values, queries);
     data.message = 'Trip cancelled successfully';
     return data;

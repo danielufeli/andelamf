@@ -22,7 +22,7 @@ class authController {
 
   static async userSignin(req, res) {
     try {
-      const user = await getCurrentUser('email', req.body.email);
+      const user = await getCurrentUser('email', req.body.email.trim());
       const data = generateUserToken(user);
       return res.status(200).json({ status: 'success', data });
     } catch (error) { return res.status(500).json(error); }
