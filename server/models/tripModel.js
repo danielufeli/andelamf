@@ -5,6 +5,7 @@ const tripModel = {
   returning *`,
   allTrips: 'SELECT * FROM trips',
   updateTrip: 'UPDATE trips SET status = $1 WHERE trip_id = $2 returning *',
+  getTripById: 'SELECT * FROM trips WHERE trip_id = $1',
 };
 
 export default tripModel;

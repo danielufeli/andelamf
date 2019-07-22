@@ -33,6 +33,13 @@ describe('Test trip endpoints Admin', () => {
       .send();
     res.status.should.be.equal(404);
   });
+  it('should create a bus', async () => {
+    const res = await chai.request(server)
+      .post('/api/v1/bus')
+      .set('token', adminToken)
+      .send(tripInfo.newBus);
+    res.status.should.be.equal(201);
+  });
   it('should create a trip', async () => {
     const res = await chai.request(server)
       .post('/api/v1/trips')
@@ -87,13 +94,6 @@ describe('Test trip endpoints Admin', () => {
       .send(tripInfo.invalidTripDate);
     res.status.should.be.equal(400);
     res.body.error.should.have.eql('"trip_date" must be a number of milliseconds or valid date string');
-  });
-  it('Should get all bookings', async () => {
-    const res = await chai.request(server)
-      .get('/api/v1/bookings/')
-      .set('token', adminToken)
-      .send();
-    res.status.should.be.equal(200);
   });
   it('Should cancel trip', async () => {
     const res = await chai.request(server)
