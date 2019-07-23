@@ -26,13 +26,6 @@ describe('Test trip endpoints Admin', () => {
     res.status.should.be.equal(401);
     res.body.should.be.a('object');
   });
-  it('should fail if no trip is available', async () => {
-    const res = await chai.request(server)
-      .get('/api/v1/trips')
-      .set('token', adminToken)
-      .send();
-    res.status.should.be.equal(404);
-  });
   it('should create a bus', async () => {
     const res = await chai.request(server)
       .post('/api/v1/bus')

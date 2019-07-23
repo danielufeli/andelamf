@@ -14,7 +14,7 @@ const tripInfo = {
     capacity: 14,
   },
   newBooking: {
-    trip_id: 1,
+    trip_id: 2,
   },
   ommitBookingUser: {
     trip_id: 1,
