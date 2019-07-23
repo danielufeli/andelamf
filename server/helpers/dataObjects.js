@@ -112,8 +112,8 @@ export default class dataObjects {
     return data;
   }
 
-  static filterDestination(trips, des) {
-    const newTrips = trips.filter(trip => trip.destination.toLowerCase() === des.toLowerCase());
+  static filterTrip(trips, key, value) {
+    const newTrips = trips.filter(trip => trip[key].toLowerCase() === value.toLowerCase());
     return newTrips;
   }
 }

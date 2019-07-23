@@ -3,7 +3,7 @@ import tripModel from '../models/tripModel';
 
 const { allTrips } = tripModel;
 const {
-  getAllData, getTripBooking, getBusTrip, getTripParams, filterDestination,
+  getAllData, getTripBooking, getBusTrip, getTripParams, filterTrip,
 } = dataObjects;
 
 export default class checkTrips {
@@ -11,10 +11,15 @@ export default class checkTrips {
     try {
       const trips = await getAllData(allTrips);
       if (trips.length < 1) { return res.status(404).json({ status: 'error', error: 'No Trips Available' }); }
-      const { destination } = req.query;
+      const { destination, origin } = req.query;
       if (destination !== undefined) {
-        const data = filterDestination(trips, destination);
-        if (data.length < 1) { return res.status(404).json({ status: 'error', error: 'No Trips Found' }); }
+        const data = filterTrip(trips, 'destination', destination);
+        if (data.length < 1) { return res.status(404).json({ status: 'error', error: `No Trips Found with '${destination}' Destination` }); }
+        return res.status(200).json({ status: 200, data });
+      }
+      if (origin !== undefined) {
+        const data = filterTrip(trips, 'origin', origin);
+        if (data.length < 1) { return res.status(404).json({ status: 'error', error: `No Trips Found with '${origin}' origin` }); }
         return res.status(200).json({ status: 200, data });
       }
       return next();
