@@ -12,7 +12,9 @@ const {
   createTrip, getAllTrips, cancelTrip,
 } = tripController;
 const { verifyToken } = auth;
-const { checkAllTrips, checkTripUpdate, checkBusBooking } = checkTrip;
+const {
+  checkAllTrips, checkTripUpdate, checkBusBooking,
+} = checkTrip;
 const { validateTrip } = validateInput;
 
 router.post('/', verifyToken, isAdmin, allValidator(validateTrip), checkBusBooking, createTrip);

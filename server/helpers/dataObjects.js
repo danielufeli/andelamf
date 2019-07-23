@@ -64,6 +64,13 @@ export default class dataObjects {
     return trip;
   }
 
+  static async getTripParams(req) {
+    // eslint-disable-next-line camelcase
+    const { tripId } = req.params;
+    const trip = await insertQuery([Number(tripId)], getTripById);
+    return trip;
+  }
+
   static async newBooking(req, queries) {
     // eslint-disable-next-line camelcase
     const { trip_id, newseatno } = req.body;
@@ -103,5 +110,10 @@ export default class dataObjects {
     const data = await insertQuery(values, queries);
     data.message = 'Booking deleted successfully';
     return data;
+  }
+
+  static filterDestination(trips, des) {
+    const newTrips = trips.filter(trip => trip.destination.toLowerCase() === des.toLowerCase());
+    return newTrips;
   }
 }
