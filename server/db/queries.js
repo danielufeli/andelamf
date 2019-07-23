@@ -52,6 +52,14 @@ const seedQueries = {
   ('user1@wayfarer.com', 'James', 'Oniola', '${hashPassword}', '08105334020', '26 fagbeyiro street alakuko', false),
   ('user2@wayfarer.com', 'Olanrewaju', 'Julius', '${hashPassword}', '08037265917', '26 fagbeyiro street alakuko', false)
   `,
+  busTable: `INSERT INTO
+  buses(number_plate, manufacturer, model, year, capacity)
+  VALUES('AGL409EK', 'Toyota', 'Coaster', '2009', '32')
+  `,
+  tripTable: `INSERT INTO
+  trips(bus_id, origin, destination, trip_date, fare)
+  VALUES('1', 'Akute', 'Lekki', '2019-07-20', '1000')
+  `,
 };
 
 module.exports = {
