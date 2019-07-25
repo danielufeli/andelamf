@@ -1,8 +1,12 @@
 import dataObjects from '../helpers/dataObjects';
 import bookingModel from '../models/bookingModel';
 
-const { deleteData, getAllData, newBooking } = dataObjects;
-const { allBookings, createBooking, deleteBookingQuery } = bookingModel;
+const {
+  deleteData, getAllData, newBooking, updateSeat,
+} = dataObjects;
+const {
+  allBookings, createBooking, deleteBookingQuery, updateSeatNum,
+} = bookingModel;
 
 class bookingController {
   static async seatBooking(req, res) {
@@ -22,6 +26,13 @@ class bookingController {
   static async deleteBookings(req, res) {
     try {
       const data = await deleteData(req, deleteBookingQuery);
+      res.status(200).json({ status: 'success', data });
+    } catch (error) { res.status(500).json(error); }
+  }
+
+  static async updateSeatNo(req, res) {
+    try {
+      const data = await updateSeat(req, updateSeatNum);
       res.status(200).json({ status: 'success', data });
     } catch (error) { res.status(500).json(error); }
   }

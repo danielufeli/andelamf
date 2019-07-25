@@ -16,6 +16,7 @@ const bookingModel = {
   `,
   deleteBookingQuery: 'DELETE FROM bookings WHERE booking_id=$1 returning *',
   getBookingById: 'SELECT * FROM bookings WHERE booking_id = $1',
+  updateSeatNum: 'UPDATE bookings SET seat_number = $1 WHERE booking_id = $2 returning *',
   getBookingByTrip: 'SELECT * FROM bookings WHERE trip_id = $1',
 };
 

@@ -4,7 +4,7 @@ import tripModel from '../models/tripModel';
 import bookingModel from '../models/bookingModel';
 
 const { insertQuery, selectQuery } = dbObjects;
-const { allBookings } = bookingModel;
+const { allBookings, getBookingById } = bookingModel;
 const { getBusById } = busModel;
 const { getTripById } = tripModel;
 
@@ -71,6 +71,13 @@ export default class dataObjects {
     return trip;
   }
 
+  static async getBookingParams(req) {
+    // eslint-disable-next-line camelcase
+    const { bookingId } = req.params;
+    const booking = await insertQuery([Number(bookingId)], getBookingById);
+    return booking;
+  }
+
   static async newBooking(req, queries) {
     // eslint-disable-next-line camelcase
     const { trip_id, newseatno } = req.body;
@@ -109,6 +116,15 @@ export default class dataObjects {
     const values = [Number(bookingId)];
     const data = await insertQuery(values, queries);
     data.message = 'Booking deleted successfully';
+    return data;
+  }
+
+  static async updateSeat(req, queries) {
+    const { bookingId } = req.params;
+    const { seat_number } = req.body;
+    const values = [Number(seat_number), Number(bookingId)];
+    const data = await insertQuery(values, queries);
+    data.message = 'Your seat number has been successfully updated';
     return data;
   }
 
